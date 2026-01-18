@@ -44,4 +44,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    protected function bookings(){
+        return $this->hasMany(Bookings::class);
+    }
 }
