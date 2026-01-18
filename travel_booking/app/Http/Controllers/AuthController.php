@@ -6,6 +6,7 @@ use App\Models\User;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\SignupRequest;
+use App\Http\Requests\LoginRequest;
 
 class AuthController extends Controller
 {
@@ -24,7 +25,7 @@ class AuthController extends Controller
 
         $user->save();
 
-        // print_r($user);
+
 
         return redirect('/dashboard');
 
@@ -32,9 +33,22 @@ class AuthController extends Controller
 
     public function showLoginForm(){
 
+        return view('auth.signin');
     }
 
-    public function login(){
+    public function login(LoginRequest $request){
+
+        $credentials = $request->only('email', 'password');
+
+        if (auth()->attempt($credentials)){
+
+            return redirect('/dashboard');
+        }else{
+
+            return back()->withErrors(['message' => 'Invalid credentials'])->withInput();
+        }
+
+
 
     }
 

@@ -11,6 +11,9 @@ Route::get('/', function () {
 Route::get('/signup', [AuthController::class, 'showSignUpForm']);
 Route::post('/signup', [AuthController::class, 'signUp']);
 
+Route::get('/signin', [AuthController::class, 'showLoginForm']);
+Route::post('/signin', [AuthController::class, 'login']);
+
 
 
 Route::get('/dashboard' ,function(){
