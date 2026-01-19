@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\FlightController;
 
 
 Route::get('/', function () {
@@ -23,14 +25,21 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
-// Route::middleware(['auth'])->group(function(){
+Route::middleware(['auth'])->group(function(){
 
     Route::get('/dashboard' ,function(){
-            return view('dashboard');
-    });
+        return view('dashboard');
+        });
+
+        Route::resource('bookings', BookingController::class);
+
+        Route::get('/flights/by-date', [BookingController::class, 'getFlightsByDate']);
+        Route::resource('flights', FlightController::class);
 
 
-// });
+
+
+});
 
 
 
