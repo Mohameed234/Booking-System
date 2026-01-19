@@ -23,7 +23,7 @@
         </div>
         @endif
 
-    <form action="/signup" method="POST" class="space-y-6">
+    <form action="/signin" method="POST" class="space-y-6">
         @csrf
 
       <div>

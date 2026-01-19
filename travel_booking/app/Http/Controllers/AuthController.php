@@ -13,17 +13,25 @@ class AuthController extends Controller
 
     public function showSignUpForm()
     {
+        if(auth()->check()){
+            return redirect('/dashboard');
+        }
+
         return view('auth.signup');
     }
 
     public function signUp(SignupRequest $request)
     {
+
+
         $user = new User();
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = $request->input('password');
 
         $user->save();
+
+        auth()->login($user);
 
 
 
@@ -32,6 +40,10 @@ class AuthController extends Controller
     }
 
     public function showLoginForm(){
+
+        if(auth()->check()){
+                return redirect('/dashboard');
+        }
 
         return view('auth.signin');
     }
@@ -42,18 +54,22 @@ class AuthController extends Controller
 
         if (auth()->attempt($credentials)){
 
+            $request->session()->regenerate();
+
             return redirect('/dashboard');
-        }else{
+        }
 
             return back()->withErrors(['message' => 'Invalid credentials'])->withInput();
-        }
+
 
 
 
     }
 
     public function Logout(){
+        auth()->Logout();
 
+        return redirect('/signin');
     }
 
 }
