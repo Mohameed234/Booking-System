@@ -25,6 +25,8 @@ class AuthController extends Controller
 
         $user->save();
 
+        auth()->login($user);
+
 
 
         return redirect('/dashboard');
@@ -41,6 +43,8 @@ class AuthController extends Controller
         $credentials = $request->only('email', 'password');
 
         if (auth()->attempt($credentials)){
+
+            $request->session()->regenerate();
 
             return redirect('/dashboard');
         }else{
